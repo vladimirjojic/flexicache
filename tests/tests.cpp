@@ -1,0 +1,7 @@
+#define DOCTEST_CONFIG_IMPLEMENT_WITH_MAIN
+#include <doctest/doctest.h>
+
+TEST_CASE("basic sanity check")
+{
+    CHECK(1 + 1 == 2);
+}

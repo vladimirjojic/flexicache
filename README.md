@@ -14,12 +14,45 @@ Header-only C++17 LRU cache library.
 - C++17 or newer
 - CMake 3.14+
 
-## Build
+## Getting Started
+
+### Clone the repository (including submodules):
+
 ```sh
-mkdir build
-cd build
-cmake ..
-cmake --build .
+git clone --recurse-submodules https://github.com/vladimirjojic/flexicache.git
+cd flexicache
+```
+
+### Configure and build
+
+Using CMake:
+
+```sh
+cmake -S . -B build
+cmake --build build
+```
+
+Using command line (alternatively):
+```
+g++ -std=c++17 -Iinclude -o main src/main.cpp
+./main
+```
+
+## Project Structure
+```
+flexicache/
+├── include/
+│   └── flexicache.hpp        # main header-only library
+├── src/
+│   └── main.cpp              # example binary
+├── tests/
+│   └── tests.cpp             # doctest unit tests
+├── external/
+│   └── doctest/              # test framework (git submodule)
+├── LICENSE                   # MIT license
+├── README.md
+├── .gitignore
+└── CMakeLists.txt            # build configuration
 ```
 
 ## Usage Example
