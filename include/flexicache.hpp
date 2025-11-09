@@ -27,6 +27,9 @@ public:
 
     void put(const Key &k, const Value &v)
     {
+        if (capacity_ == 0)
+            return;
+
         const auto &it = cache_.find(k);
 
         if (it != cache_.end())
@@ -66,6 +69,16 @@ public:
     bool contains(const Key &k) const
     {
         return cache_.find(k) != cache_.end();
+    }
+
+    size_t size() const noexcept
+    {
+        return cache_.size();
+    }
+
+    size_t capacity() const noexcept
+    {
+        return capacity_;
     }
 
 private:
