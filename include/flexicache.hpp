@@ -17,6 +17,7 @@
 #include <unordered_map>
 #include <list>
 #include <optional>
+#include <algorithm>
 
 template <typename Key, typename Value>
 class FlexiCache
