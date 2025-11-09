@@ -25,7 +25,7 @@ class FlexiCache
 public:
     FlexiCache(size_t capacity) : capacity_(capacity) {}
 
-    void put(const Key &k, const Value &v)
+    void put(const Key &k, const Value &v) noexcept
     {
         if (capacity_ == 0)
             return;
@@ -50,7 +50,7 @@ public:
         cache_[k] = {v, list_.begin()};
     }
 
-    const std::optional<Value> get(const Key &k)
+    const std::optional<Value> get(const Key &k) noexcept
     {
         auto it = cache_.find(k);
         if (it == cache_.end())
@@ -60,10 +60,11 @@ public:
         return it->second.first;
     }
 
-    bool contains(const Key &k) const
+    bool contains(const Key &k) const 
     {
         return cache_.find(k) != cache_.end();
     }
+
 
     size_t size() const noexcept
     {
