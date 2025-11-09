@@ -30,40 +30,34 @@ public:
         if (capacity_ == 0)
             return;
 
-        const auto &it = cache_.find(k);
-
+        auto it = cache_.find(k);
         if (it != cache_.end())
         {
-            auto const &list_it = std::find(list_.begin(), list_.end(), k);
-            list_.erase(list_it);
+            list_.erase(it->second.second);
+            list_.push_front(k);
+            it->second = {v, list_.begin()};
+            return;
         }
 
         if (list_.size() >= capacity_)
         {
             const auto &old_key = list_.back();
-            list_.pop_back();
             cache_.erase(old_key);
+            list_.pop_back();
         }
 
         list_.push_front(k);
-        cache_[k] = v;
+        cache_[k] = {v, list_.begin()};
     }
 
     const std::optional<Value> get(const Key &k)
     {
-        if (this->contains(k))
-        {
-            auto it = std::find(list_.begin(), list_.end(), k);
-            if (it != list_.end())
-            {
-                list_.erase(it);
-                list_.push_front(k);
-            }
+        auto it = cache_.find(k);
+        if (it == cache_.end())
+            return std::nullopt;
 
-            return cache_[k];
-        }
-
-        return std::nullopt;
+        list_.splice(list_.begin(), list_, it->second.second);
+        return it->second.first;
     }
 
     bool contains(const Key &k) const
@@ -83,7 +77,7 @@ public:
 
 private:
     size_t capacity_;
-    std::unordered_map<Key, Value> cache_;
+    std::unordered_map<Key, std::pair<Value, typename std::list<Key>::iterator>> cache_;
     std::list<Key> list_;
 };
 
